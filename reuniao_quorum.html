@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ata da Reunião do Quórum de Élderes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 300;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin: 25px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        
+        .info-reuniao, .presentes {
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-reuniao label, .presentes label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .info-reuniao input, .presentes input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .info-reuniao input:focus, .presentes input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .item {
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .item h3 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .item textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            margin-bottom: 12px;
+        }
+        
+        .item textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .botoes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .botoes button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 180px;
+        }
+        
+        #visualizar-ata {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        #visualizar-ata:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        #limpar-campos {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
+        
+        #limpar-campos:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 53, 69, 0.3);
+        }
+        
+        #salvar-ata {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+        
+        #salvar-ata:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        #ata-texto {
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 14px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .botoes {
+                flex-direction: column;
+            }
+            
+            .botoes button {
+                width: 100%;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ata da Reunião Dominical do Quórum de Élderes</h1>
+        
+        <div class="info-reuniao">
+            <label>Data da Reunião:</label>
+            <input type="date">
+            <label>Presidida por:</label>
+            <input type="text" placeholder="____________________________">
+        </div>
+
+        <h2>Presentes:</h2>
+        <div class="presentes">
+            <label>Membros da presidência do quórum de élderes:</label>
+            <input type="text" placeholder="____________________________">
+            <label>Outros membros:</label>
+            <input type="text" placeholder="____________________________">
+            <label>Visitantes:</label>
+            <input type="text" placeholder="____________________________">
+        </div>
+
+        <div class="item">
+            <h3>1. Abertura da Reunião (5 minutos)</h3>
+            <label>Oração de Abertura:</label>
+            <textarea placeholder="Nome da pessoa"></textarea>
+            <label>Anúncios:</label>
+            <textarea placeholder="Anúncios importantes, atribuições, etc."></textarea>
+        </div>
+
+        <div class="item">
+            <h3>2. Aconselhamento do Quórum (5 a 10 minutos)</h3>
+            <label>Tópico em Conselho:</label>
+            <textarea placeholder="Desafios, necessidades e oportunidades discutidos..."></textarea>
+            <label>Ações Sugeridas / Compromissos:</label>
+            <textarea placeholder="Anote as ações sugeridas..."></textarea>
+        </div>
+
+        <div class="item">
+            <h3>3. Instrução e Debate sobre o Evangelho (Tempo Suficiente)</h3>
+            <label>Título da Aula:</label>
+            <textarea placeholder="Título da lição ou discurso"></textarea>
+            <label>Professor:</label>
+            <textarea placeholder="Nome do professor"></textarea>
+            <label>Mensagem Principal da Lição:</label>
+            <textarea placeholder="Anote a mensagem principal..."></textarea>
+            <label>Pontos de Debate:</label>
+            <textarea placeholder="Questões ou ideias levantadas durante a discussão"></textarea>
+            <label>Hinos Cantados:</label>
+            <textarea placeholder="Se aplicável"></textarea>
+        </div>
+
+        <div class="item">
+            <h3>4. Encerramento da Reunião</h3>
+            <label>Oração de Encerramento:</label>
+            <textarea placeholder="Nome da pessoa"></textarea>
+            <label>Designações:</label>
+            <textarea placeholder="Tarefas específicas para os membros para a próxima semana"></textarea>
+        </div>
+
+        <div class="botoes">
+            <button id="visualizar-ata">👁️ Visualizar Ata</button>
+            <button id="limpar-campos">🗑️ Limpar Campos</button>
+            <button id="salvar-ata">💾 Salvar Ata (Copiar Texto)</button>
+        </div>
+
+        <!-- Modal para visualizar a ata -->
+        <div id="modal-ata" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Visualização da Ata</h3>
+                <div id="ata-texto"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const visualizarAtaBtn = document.getElementById('visualizar-ata');
+            const salvarAtaBtn = document.getElementById('salvar-ata');
+            const limparCamposBtn = document.getElementById('limpar-campos');
+            const modal = document.getElementById('modal-ata');
+            const closeModal = document.querySelector('.close');
+            const ataTexto = document.getElementById('ata-texto');
+
+            // Função para visualizar a ata
+            visualizarAtaBtn.addEventListener('click', () => {
+                const textoAta = gerarTextoAta();
+                ataTexto.textContent = textoAta;
+                modal.style.display = 'block';
+            });
+
+            // Fechar modal
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // Fechar modal clicando fora dele
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Função para gerar texto da ata
+            function gerarTextoAta() {
+                const data = document.querySelector('.info-reuniao input:nth-child(2)').value;
+                const presididaPor = document.querySelector('.info-reuniao input:nth-child(4)').value;
+                const membrosPresidencia = document.querySelector('.presentes input:nth-child(2)').value;
+                const outrosMembros = document.querySelector('.presentes input:nth-child(4)').value;
+                const visitantes = document.querySelector('.presentes input:nth-child(6)').value;
+                
+                let texto = `ATA DA REUNIÃO DOMINICAL DO QUÓRUM DE ÉLDERES\n\n`;
+                texto += `═══════════════════════════════════════════════════════════════════\n`;
+                texto += `📅 Data da Reunião: ${data || '[Data não informada]'}\n`;
+                texto += `👤 Presidida por: ${presididaPor || '[Não informado]'}\n`;
+                texto += `═══════════════════════════════════════════════════════════════════\n\n`;
+                
+                texto += `👥 PRESENTES:\n`;
+                texto += `   • Membros da presidência: ${membrosPresidencia || '[Não informado]'}\n`;
+                texto += `   • Outros membros: ${outrosMembros || '[Não informado]'}\n`;
+                texto += `   • Visitantes: ${visitantes || '[Não informado]'}\n\n`;
+                
+                document.querySelectorAll('.item').forEach((item, index) => {
+                    const titulo = item.querySelector('h3').innerText;
+                    texto += `📋 ${titulo}\n`;
+                    texto += `───────────────────────────────────────────────────────────────\n`;
+                    
+                    item.querySelectorAll('textarea').forEach((textarea, textIndex) => {
+                        const label = item.querySelectorAll('label')[textIndex].innerText;
+                        if (textarea.value.trim()) {
+                            texto += `   ${label}: ${textarea.value}\n`;
+                        }
+                    });
+                    
+                    texto += `\n`;
+                });
+
+                texto += `═══════════════════════════════════════════════════════════════════\n`;
+                texto += `📄 Ata gerada em: ${new Date().toLocaleString('pt-BR')}\n`;
+                return texto;
+            }
+
+            // Função para salvar/copiar a ata
+            salvarAtaBtn.addEventListener('click', () => {
+                const textoAta = gerarTextoAta();
+
+                // Cria um elemento temporário para copiar o texto
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = textoAta;
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextarea);
+
+                alert("Ata copiada para a área de transferência! Cole em um documento de texto ou arquivo.");
+            });
+
+            // Função para limpar campos
+            limparCamposBtn.addEventListener('click', () => {
+                if (confirm('Tem certeza que deseja limpar todos os campos? Esta ação não pode ser desfeita.')) {
+                    document.querySelectorAll('input, textarea').forEach(field => {
+                        field.value = '';
+                    });
+                    
+                    alert('Campos limpos com sucesso!');
+                }
+            });
+
+            // Configurar data atual como padrão
+            const hoje = new Date();
+            const dataFormatada = hoje.toISOString().split('T')[0];
+            document.querySelector('.info-reuniao input:nth-child(2)').value = dataFormatada;
+        });
+    </script>
+</body>
+</html>
