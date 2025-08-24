@@ -171,6 +171,16 @@
             box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
         }
         
+        #whatsapp-ata {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+        }
+        
+        #whatsapp-ata:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+        }
+        
         .modal {
             display: none;
             position: fixed;
@@ -311,7 +321,8 @@
         <div class="botoes">
             <button id="visualizar-ata">👁️ Visualizar Ata</button>
             <button id="limpar-campos">🗑️ Limpar Campos</button>
-            <button id="salvar-ata">💾 Salvar Ata (Copiar Texto)</button>
+            <button id="salvar-ata">💾 Copiar Ata</button>
+            <button id="whatsapp-ata">📱 Enviar por WhatsApp</button>
         </div>
 
         <!-- Modal para visualizar a ata -->
@@ -329,6 +340,7 @@
             const visualizarAtaBtn = document.getElementById('visualizar-ata');
             const salvarAtaBtn = document.getElementById('salvar-ata');
             const limparCamposBtn = document.getElementById('limpar-campos');
+            const whatsappAtaBtn = document.getElementById('whatsapp-ata');
             const modal = document.getElementById('modal-ata');
             const closeModal = document.querySelector('.close');
             const ataTexto = document.getElementById('ata-texto');
@@ -360,26 +372,26 @@
                 const outrosMembros = document.querySelector('.presentes input:nth-child(4)').value;
                 const visitantes = document.querySelector('.presentes input:nth-child(6)').value;
                 
-                let texto = `ATA DA REUNIÃO DOMINICAL DO QUÓRUM DE ÉLDERES\n\n`;
+                let texto = `*ATA DA REUNIÃO DOMINICAL DO QUÓRUM DE ÉLDERES*\n\n`;
                 texto += `═══════════════════════════════════════════════════════════════════\n`;
-                texto += `📅 Data da Reunião: ${data || '[Data não informada]'}\n`;
-                texto += `👤 Presidida por: ${presididaPor || '[Não informado]'}\n`;
+                texto += `📅 *Data da Reunião:* ${data || '[Data não informada]'}\n`;
+                texto += `👤 *Presidida por:* ${presididaPor || '[Não informado]'}\n`;
                 texto += `═══════════════════════════════════════════════════════════════════\n\n`;
                 
-                texto += `👥 PRESENTES:\n`;
-                texto += `   • Membros da presidência: ${membrosPresidencia || '[Não informado]'}\n`;
-                texto += `   • Outros membros: ${outrosMembros || '[Não informado]'}\n`;
-                texto += `   • Visitantes: ${visitantes || '[Não informado]'}\n\n`;
+                texto += `👥 *PRESENTES:*\n`;
+                texto += `   • *Membros da presidência:* ${membrosPresidencia || '[Não informado]'}\n`;
+                texto += `   • *Outros membros:* ${outrosMembros || '[Não informado]'}\n`;
+                texto += `   • *Visitantes:* ${visitantes || '[Não informado]'}\n\n`;
                 
                 document.querySelectorAll('.item').forEach((item, index) => {
                     const titulo = item.querySelector('h3').innerText;
-                    texto += `📋 ${titulo}\n`;
+                    texto += `📋 *${titulo}*\n`;
                     texto += `───────────────────────────────────────────────────────────────\n`;
                     
                     item.querySelectorAll('textarea').forEach((textarea, textIndex) => {
                         const label = item.querySelectorAll('label')[textIndex].innerText;
                         if (textarea.value.trim()) {
-                            texto += `   ${label}: ${textarea.value}\n`;
+                            texto += `   *${label}:* ${textarea.value}\n`;
                         }
                     });
                     
@@ -387,7 +399,7 @@
                 });
 
                 texto += `═══════════════════════════════════════════════════════════════════\n`;
-                texto += `📄 Ata gerada em: ${new Date().toLocaleString('pt-BR')}\n`;
+                texto += `📄 _Ata gerada em: ${new Date().toLocaleString('pt-BR')}_\n`;
                 return texto;
             }
 
@@ -414,6 +426,20 @@
                     });
                     
                     alert('Campos limpos com sucesso!');
+                }
+            });
+
+            // Função para enviar por WhatsApp
+            whatsappAtaBtn.addEventListener('click', () => {
+                const textoAta = gerarTextoAta();
+                const numeroWhatsapp = prompt("Digite o número para enviar a ata (com DDD, apenas números):");
+                
+                if (numeroWhatsapp && numeroWhatsapp.trim() !== '') {
+                    const numeroLimpo = numeroWhatsapp.replace(/\D/g, '');
+                    const textoCodificado = encodeURIComponent(textoAta);
+                    const urlWhatsapp = `https://wa.me/55${numeroLimpo}?text=${textoCodificado}`;
+                    
+                    window.open(urlWhatsapp, '_blank');
                 }
             });
 
