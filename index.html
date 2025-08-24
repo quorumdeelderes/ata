@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Atas - Quórum de Élderes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 300;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .opcao {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .opcao:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        
+        .opcao:active {
+            transform: translateY(-1px);
+        }
+        
+        .icone {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            color: white;
+        }
+        
+        .texto-opcao {
+            text-align: left;
+            flex: 1;
+        }
+        
+        .texto-opcao h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .texto-opcao p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .seta {
+            font-size: 20px;
+            color: #667eea;
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .opcao {
+                padding: 15px;
+            }
+            
+            .icone {
+                font-size: 20px;
+                width: 35px;
+                height: 35px;
+                margin-right: 12px;
+            }
+            
+            .texto-opcao h3 {
+                font-size: 16px;
+            }
+            
+            .texto-opcao p {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Sistema de Atas</h1>
+        <p class="description">Selecione o tipo de ata que deseja criar ou visualizar:</p>
+        
+        <div class="opcoes">
+            <a href="livro_ata.html" class="opcao">
+                <div class="icone">📖</div>
+                <div class="texto-opcao">
+                    <h3>Livro de Ata - Reuniões da Presidência</h3>
+                    <p>Para reuniões administrativas e de liderança da presidência</p>
+                </div>
+                <div class="seta">→</div>
+            </a>
+            
+            <a href="reuniao_quorum.html" class="opcao">
+                <div class="icone">👥</div>
+                <div class="texto-opcao">
+                    <h3>Ata da Reunião Dominical</h3>
+                    <p>Para reuniões regulares do quórum de élderes aos domingos</p>
+                </div>
+                <div class="seta">→</div>
+            </a>
+        </div>
+        
+        <footer>
+            <p>Sistema desenvolvido para o Quórum de Élderes</p>
+        </footer>
+    </div>
+</body>
+</html>
